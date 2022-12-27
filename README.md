@@ -1,1 +1,1 @@
-# database-systems-paper
+# Weaviate Case Study
