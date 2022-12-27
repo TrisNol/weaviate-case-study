@@ -1,0 +1,5 @@
+weaviate-client
+pandas
+numpy
+matplotlib
+HanTa
