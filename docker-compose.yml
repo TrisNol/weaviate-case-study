@@ -15,11 +15,11 @@ services:
       TRANSFORMERS_INFERENCE_API: http://t2v-transformers:8080
       CLUSTER_GOSSIP_BIND_PORT: 7000
       CLUSTER_DATA_BIND_PORT: 7001
-      # CLUSTER_JOIN: weaviate-replica
     volumes:
       - weaviate-data-main:/var/lib/weaviate
     networks:
       - weaviate-cluster
+
   weaviate-replica:
     image: semitechnologies/weaviate:1.17.0
     container_name: weaviate-replica
@@ -40,6 +40,7 @@ services:
       - weaviate-data-replica:/var/lib/weaviate
     networks:
       - weaviate-cluster
+
   t2v-transformers:
     image: semitechnologies/transformers-inference:sentence-transformers-msmarco-distilroberta-base-v2
     container_name: t2v-transformers
@@ -47,17 +48,12 @@ services:
       ENABLE_CUDA: 0
       NVIDIA_VISIBLE_DEVICES: all
     restart: always
-    deploy:
-          resources:
-            reservations:
-              devices:
-                - capabilities: [gpu]
     networks:
       - weaviate-cluster 
+      
 volumes:
   weaviate-data-main:
   weaviate-data-replica:
 
 networks:
   weaviate-cluster:
-    # driver: bridge
