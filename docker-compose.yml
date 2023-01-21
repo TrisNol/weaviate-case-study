@@ -1,0 +1,59 @@
+version: '3.8'
+services:
+  weaviate-main:
+    image: semitechnologies/weaviate:1.17.0
+    container_name: weaviate-main
+    ports:
+      - 8080:8080
+    restart: always
+    environment:
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      AUTOSCHEMA_ENABLED: 'false'
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      DEFAULT_VECTORIZER_MODULE: text2vec-transformers
+      ENABLE_MODULES: text2vec-transformers
+      TRANSFORMERS_INFERENCE_API: http://t2v-transformers:8080
+      CLUSTER_GOSSIP_BIND_PORT: 7000
+      CLUSTER_DATA_BIND_PORT: 7001
+    volumes:
+      - weaviate-data-main:/var/lib/weaviate
+    networks:
+      - weaviate-cluster
+
+  weaviate-replica:
+    image: semitechnologies/weaviate:1.17.0
+    container_name: weaviate-replica
+    ports:
+      - 8081:8080
+    restart: always
+    environment:
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      AUTOSCHEMA_ENABLED: 'false'
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      DEFAULT_VECTORIZER_MODULE: text2vec-transformers
+      ENABLE_MODULES: text2vec-transformers
+      TRANSFORMERS_INFERENCE_API: http://t2v-transformers:8080
+      CLUSTER_GOSSIP_BIND_PORT: 7000
+      CLUSTER_DATA_BIND_PORT: 7001
+      CLUSTER_JOIN: weaviate-main
+    volumes:
+      - weaviate-data-replica:/var/lib/weaviate
+    networks:
+      - weaviate-cluster
+
+  t2v-transformers:
+    image: semitechnologies/transformers-inference:sentence-transformers-msmarco-distilroberta-base-v2
+    container_name: t2v-transformers
+    environment:
+      ENABLE_CUDA: 0
+      NVIDIA_VISIBLE_DEVICES: all
+    restart: always
+    networks:
+      - weaviate-cluster 
+      
+volumes:
+  weaviate-data-main:
+  weaviate-data-replica:
+
+networks:
+  weaviate-cluster:
