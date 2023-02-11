@@ -18,7 +18,7 @@ fonttools==4.38.0
 HanTa==0.2.2
 idna==3.4
 ipykernel==6.19.4
-ipython==8.8.0
+ipython==8.10.0
 jedi==0.18.2
 joblib==1.2.0
 jupyter_client==7.4.8
