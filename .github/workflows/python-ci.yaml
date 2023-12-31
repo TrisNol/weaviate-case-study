@@ -22,6 +22,6 @@ jobs:
       - name: Call composite workflow 
         uses: trisnol/workflows/python-main@main
         with: 
-          version: '3.10'
+          version: '3.11'
           min_test_coverage: '0.0'
 
