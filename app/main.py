@@ -4,7 +4,7 @@ import requests
 
 def downdload_txt_to_file(url: str, filepath: str) -> None:
     with open(filepath, "w", encoding='utf-8') as file:
-        response = requests.get(url, stream=True)
+        response = requests.get(url, stream=True, timeout=120)
         if not response.ok:
             raise Exception()
         file.write(response.text)        
