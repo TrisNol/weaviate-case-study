@@ -15,7 +15,7 @@ entrypoints==0.4
 executing==1.2.0
 fonttools==4.43.0
 HanTa==0.2.2
-idna==3.4
+idna==3.7
 ipykernel==6.19.4
 ipython==8.10.0
 jedi==0.18.2
