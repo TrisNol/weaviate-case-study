@@ -50,6 +50,6 @@ stack-data==0.6.2
 tornado==6.4.1
 tqdm==4.66.3
 traitlets==5.8.0
-urllib3==1.26.18
+urllib3==1.26.19
 wcwidth==0.2.5
 weaviate-client==3.26.0
